@@ -43,6 +43,18 @@ jobs:
         if: env.ON_MAIN_PUSH == 'true' && env.SKIP_RELEASE == 'false'
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
 
+      - name: Notify Discord on failure
+        if: failure()
+        uses: rjstone/discord-webhook-notify@v2.2.1
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK }}
+          message: |
+            :x: Build failed in workflow **${{ github.workflow }}**
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
@@ -52,8 +64,20 @@ jobs:
 
       - name: Bump version and push tag
         if: env.ON_MAIN_PUSH == 'true' && env.SKIP_RELEASE == 'false'
-        uses: anothrNick/github-tag-action@1.75.0
+        uses: anothrNick/github-tag-action@4ed44965e0db8dab2b466a16da04aec3cc312fd8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
-          # DRY_RUN: true
+
+      - name: Notify Discord on success
+        if: success()
+        uses: rjstone/discord-webhook-notify@v2.2.1
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK }}
+          message: |
+          :white_check_mark: Deployment succeeded!
+          Repository: ${{ github.repository }}
+          Branch: ${{ github.ref_name }}
+          Version: ${{ github.ref_name }}
+          Commit: ${{ github.sha }}
+          Deployed by: ${{ github.actor }}
