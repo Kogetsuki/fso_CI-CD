@@ -53,13 +53,6 @@ jobs:
           description: "Commit [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) by ${{ github.actor }}"
           color: "16711680"
           footer: "Severity: Error • ${{ github.event.head_commit.timestamp }}"
-          fields: |
-            - name: Repository
-              value: ${{ github.repository }}
-              inline: true
-            - name: Branch
-              value: ${{ github.ref_name }}
-              inline: true
 
   tag_release:
     needs: [simple_deployment_pipeline]
@@ -86,13 +79,3 @@ jobs:
           description: "Version **${{ steps.tag.outputs.new_tag }}** deployed to [https://fso-ci-cd-0q26.onrender.com/](https://fso-ci-cd-0q26.onrender.com/) by ${{ github.actor }}"
           color: "65280"
           footer: "Severity: Informational • ${{ github.event.head_commit.timestamp }}"
-          fields: |
-            - name: Repository
-              value: ${{ github.repository }}
-              inline: true
-            - name: Branch
-              value: ${{ github.ref_name }}
-              inline: true
-            - name: Commit
-              value: ${{ github.sha }}
-              inline: false
