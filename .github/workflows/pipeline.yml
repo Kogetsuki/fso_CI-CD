@@ -48,8 +48,8 @@ jobs:
         if: failure()
         uses: appleboy/discord-action@v0.2.4
         with:
-          webhook_id: ${{ secrets.DISCORD_WEBHOOK }}
-          message: |
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          text: |
             :x: Build or tests failed in workflow **${{ github.workflow }}**
             Repository: ${{ github.repository }}
             Branch: ${{ github.ref_name }}
@@ -75,8 +75,8 @@ jobs:
         if: success()
         uses: appleboy/discord-action@v0.2.4
         with:
-          webhook_id: ${{ secrets.DISCORD_WEBHOOK }}
-          message: |
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          text: |
             :white_check_mark: Deployment succeeded!
             Repository: ${{ github.repository }}
             Branch: ${{ github.ref_name }}
