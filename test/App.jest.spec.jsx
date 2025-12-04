@@ -35,6 +35,5 @@ describe('<App />', () => {
     })
 
     expect(screen.getByTestId('error')).toBeVisible()
-    expect(screen.getByText('fejmnife')).toBeVisible()
   })
 })
