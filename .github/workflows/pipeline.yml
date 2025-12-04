@@ -15,6 +15,7 @@ env:
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -45,11 +46,11 @@ jobs:
 
       - name: Notify Discord on failure
         if: failure()
-        uses: rjstone/discord-webhook-notify@v2.2.1
+        uses: appleboy/discord-action@v0.2.4
         with:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK }}
           message: |
-            :x: Build failed in workflow **${{ github.workflow }}**
+            :x: Build or tests failed in workflow **${{ github.workflow }}**
             Repository: ${{ github.repository }}
             Branch: ${{ github.ref_name }}
             Commit: ${{ github.sha }}
@@ -58,25 +59,26 @@ jobs:
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Bump version and push tag
         if: env.ON_MAIN_PUSH == 'true' && env.SKIP_RELEASE == 'false'
-        uses: anothrNick/github-tag-action@4ed44965e0db8dab2b466a16da04aec3cc312fd8
+        uses: anothrNick/github-tag-action@1.75.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
 
       - name: Notify Discord on success
         if: success()
-        uses: rjstone/discord-webhook-notify@v2.2.1
+        uses: appleboy/discord-action@v0.2.4
         with:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK }}
           message: |
-          :white_check_mark: Deployment succeeded!
-          Repository: ${{ github.repository }}
-          Branch: ${{ github.ref_name }}
-          Commit: ${{ github.sha }}
-          Deployed by: ${{ github.actor }}
+            :white_check_mark: Deployment succeeded!
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Deployed by: ${{ github.actor }}
