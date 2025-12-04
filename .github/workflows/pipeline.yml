@@ -13,9 +13,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: npm install
-      - run: npm run eslint
-      - run: npm run build
-      - run: npm run test
-      - run: npx playwright install --with-deps
-      - run: npm run test:e2e
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint code
+        run: npm run eslint
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Unit tests
+        run: npm run test
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: End-to-end tests
+        run: npm run test:e2e
+
+      - name: Trigger deployment
+        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
