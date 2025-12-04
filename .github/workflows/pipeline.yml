@@ -46,7 +46,7 @@ jobs:
 
       - name: Notify Discord on failure
         if: failure()
-        uses: appleboy/discord-action@v0.2.4
+        uses: rjstone/discord-webhook-notify@v2.2.1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           text: |
@@ -73,7 +73,7 @@ jobs:
 
       - name: Notify Discord on success
         if: success()
-        uses: appleboy/discord-action@v0.2.4
+        uses: rjstone/discord-webhook-notify@v2.2.1
         with:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           text: |
