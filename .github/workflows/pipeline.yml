@@ -53,7 +53,7 @@ jobs:
             Repository: ${{ github.repository }}
             Branch: ${{ github.ref_name }}
             Commit: ${{ github.sha }}
-            Author: ${{ github.actor }}
+            Triggered by: ${{ github.actor }}
 
   tag_release:
     needs: [simple_deployment_pipeline]
@@ -78,6 +78,5 @@ jobs:
           :white_check_mark: Deployment succeeded!
           Repository: ${{ github.repository }}
           Branch: ${{ github.ref_name }}
-          Version: ${{ github.ref_name }}
           Commit: ${{ github.sha }}
           Deployed by: ${{ github.actor }}
