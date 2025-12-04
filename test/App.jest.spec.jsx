@@ -5,6 +5,7 @@ import { act } from 'react-dom/test-utils'
 import '@testing-library/jest-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 import App from '../src/App'
+import { expect } from 'playwright/test'
 
 
 jest.mock('axios')
@@ -34,5 +35,6 @@ describe('<App />', () => {
     })
 
     expect(screen.getByTestId('error')).toBeVisible()
+    expect(screen.getByText('fejmnife')).toBeVisible()
   })
 })
