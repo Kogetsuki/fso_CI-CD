@@ -1,3 +1,4 @@
 #!/bin/bash
 
-echo "Skipping build – CI builds the project"
+npm install
+npm run build
