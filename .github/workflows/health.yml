@@ -1,9 +1,9 @@
 name: Health Check
 
 on:
-  push: # At first for testing
-    branches:
-      - main
+  schedule:
+    - cron: "0 6 * * *" # Runs once a day @ 06:00 UTC
+  workflow_dispatch:
 
 jobs:
   health_chek:
@@ -13,7 +13,7 @@ jobs:
       - name: Check deployment health
         uses: jtalk/url-health-check-action@v4
         with:
-          url: https://fso-ci-cd-0q26.onrender.com/doesnt-exist
+          url: https://fso-ci-cd-0q26.onrender.com/
           max-attempts: 3
           retry-delay: 5s
           follow-redirect: true
@@ -28,5 +28,5 @@ jobs:
           avatarUrl: https://i.imgur.com/4M34hi2.png
           severity: error
           title: "Health Check failed"
-          description: "The periodic health check failed for <https://fso-ci-cd-0q26.onrender.com/doesnt-exist>"
-          footer: "Health Monitor • ${{ github.run_id }}"
+          description: "The periodic health check failed for <https://fso-ci-cd-0q26.onrender.com/>"
+          footer: "Health Monitor"

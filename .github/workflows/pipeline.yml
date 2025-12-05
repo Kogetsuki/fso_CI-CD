@@ -54,7 +54,7 @@ jobs:
           severity: error
           title: "Build failed"
           description: "Commit [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) by ${{ github.actor }}"
-          footer: "Severity: Error • ${{ github.event.head_commit.timestamp }}"
+          footer: "Severity: Error"
 
   tag_release:
     needs: [simple_deployment_pipeline]
@@ -81,5 +81,5 @@ jobs:
           avatarUrl: https://i.imgur.com/4M34hi2.png
           severity: info
           title: "A new version of Pokedex deployed"
-          description: "Version **${{ steps.tag.outputs.new_tag }}** deployed to [https://fso-ci-cd-0q26.onrender.com/](https://fso-ci-cd-0q26.onrender.com/) by ${{ github.actor }}"
-          footer: "Severity: Informational • ${{ github.event.head_commit.timestamp }}"
+          description: "Version **${{ steps.tag.outputs.new_tag }}** deployed to <https://fso-ci-cd-0q26.onrender.com/> by ${{ github.actor }}"
+          footer: "Severity: Informational"
